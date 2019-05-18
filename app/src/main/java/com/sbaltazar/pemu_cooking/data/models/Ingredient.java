@@ -1,9 +1,13 @@
 package com.sbaltazar.pemu_cooking.data.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Ingredient {
 
     private double quantity;
+    @SerializedName("measure")
     private MeasureType measureType;
+    @SerializedName("ingredient")
     private String name;
 
     public Ingredient(double quantity, MeasureType measureType, String name) {
