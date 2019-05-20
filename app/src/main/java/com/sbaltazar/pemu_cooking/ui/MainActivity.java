@@ -6,7 +6,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.sbaltazar.pemu_cooking.R;
 import com.sbaltazar.pemu_cooking.data.models.Recipe;
@@ -15,7 +18,11 @@ import com.sbaltazar.pemu_cooking.databinding.ActivityMainBinding;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import timber.log.Timber;
+
+public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnRecipeClickListener {
+
+    public static final String EXTRA_RECIPE = "extra_recipe";
 
     private RecipeViewModel mRecipeViewModel;
     private RecipeAdapter mRecipeAdapter;
@@ -27,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_main);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        mRecipeAdapter = new RecipeAdapter(this);
+        mRecipeAdapter = new RecipeAdapter(this, this);
 
         // RecyclerView setup
         mBinding.rvRecipes.setHasFixedSize(true);
@@ -44,5 +51,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onRecipeClick(View view, int position) {
+
+        Recipe recipe = mRecipeAdapter.getRecipe(position);
+
+        Intent recipeDetailIntent = new Intent(this, RecipeDetailActivity.class);
+
+        // Putting the recipe parcelable
+        recipeDetailIntent.putExtra(EXTRA_RECIPE, recipe);
+        startActivity(recipeDetailIntent);
     }
 }

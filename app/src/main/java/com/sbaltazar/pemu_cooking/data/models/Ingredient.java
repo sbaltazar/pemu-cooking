@@ -1,8 +1,11 @@
 package com.sbaltazar.pemu_cooking.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Ingredient {
+public class Ingredient implements Parcelable {
 
     private double quantity;
     @SerializedName("measure")
@@ -14,6 +17,36 @@ public class Ingredient {
         this.quantity = quantity;
         this.measureType = measureType;
         this.name = name;
+    }
+
+    private Ingredient(Parcel in) {
+        quantity = in.readDouble();
+        measureType = MeasureType.values()[in.readInt()];
+        name = in.readString();
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @Override
+        public Ingredient createFromParcel(Parcel in) {
+            return new Ingredient(in);
+        }
+
+        @Override
+        public Ingredient[] newArray(int size) {
+            return new Ingredient[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(quantity);
+        dest.writeInt(measureType.ordinal());
+        dest.writeString(name);
     }
 
     public double getQuantity() {
@@ -41,22 +74,19 @@ public class Ingredient {
     }
 
     private enum MeasureType {
-        CUP("CUP"),
-        TABLESPOON("TBSP"),
-        TEASPOON("TSP"),
-        KILOGRAM("K"),
-        GRAM("G"),
-        OUNCE("OZ"),
-        UNIT("UNIT");
-
-        private final String measureAbbr;
-
-        MeasureType(String measureAbbr) {
-            this.measureAbbr = measureAbbr;
-        }
-
-        public String getMeasureAbbr() {
-            return this.measureAbbr;
-        }
+        @SerializedName("CUP")
+        CUP,
+        @SerializedName("TBLSP")
+        TABLESPOON,
+        @SerializedName("TSP")
+        TEASPOON,
+        @SerializedName("K")
+        KILOGRAM,
+        @SerializedName("G")
+        GRAM,
+        @SerializedName("OZ")
+        OUNCE,
+        @SerializedName("UNIT")
+        UNIT
     }
 }

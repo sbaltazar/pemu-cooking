@@ -1,14 +1,16 @@
 package com.sbaltazar.pemu_cooking.data.models;
 
-import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Parcelable {
 
     private int id;
     private String name;
@@ -18,6 +20,44 @@ public class Recipe {
     private int servings;
     @Nullable
     private String image;
+
+    private Recipe(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        ingredients = new ArrayList<>();
+        in.readList(ingredients, Ingredient.class.getClassLoader());
+        cookingSteps = new ArrayList<>();
+        in.readList(cookingSteps, Ingredient.class.getClassLoader());
+        servings = in.readInt();
+        image = in.readString();
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeList(ingredients);
+        dest.writeList(cookingSteps);
+        dest.writeInt(servings);
+        dest.writeString(image);
+    }
 
     public int getId() {
         return id;

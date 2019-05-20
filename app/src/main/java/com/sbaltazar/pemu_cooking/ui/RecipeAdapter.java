@@ -18,8 +18,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     private final LayoutInflater mInflater;
     private List<Recipe> mRecipes;
 
-    public RecipeAdapter(Context context) {
+    final private OnRecipeClickListener mRecipeClickListener;
+
+    public interface OnRecipeClickListener {
+        void onRecipeClick(View view, int position);
+    }
+
+    RecipeAdapter(Context context, OnRecipeClickListener recipeClickListener) {
         mInflater = LayoutInflater.from(context);
+        mRecipeClickListener = recipeClickListener;
     }
 
     @NonNull
@@ -44,18 +51,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return 0;
     }
 
-    public void setRecipes(List<Recipe> recipes) {
+    void setRecipes(List<Recipe> recipes) {
         mRecipes = recipes;
         notifyDataSetChanged();
     }
 
-    class RecipeViewHolder extends RecyclerView.ViewHolder {
+    Recipe getRecipe(int position) {
+        if (mRecipes != null) return mRecipes.get(position);
+        return null;
+    }
+
+    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ItemRecipeBinding mRecipeBinding;
 
         RecipeViewHolder(@NonNull ItemRecipeBinding binding) {
             super(binding.getRoot());
             mRecipeBinding = binding;
+            binding.getRoot().setOnClickListener(this);
         }
 
         void bind(Recipe recipe) {
@@ -63,6 +76,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             mRecipeBinding.tvRecipeServings.setText(String.format("%s servings", recipe.getServings()));
 
             mRecipeBinding.executePendingBindings();
+        }
+
+        @Override
+        public void onClick(View v) {
+            mRecipeClickListener.onRecipeClick(v, getAdapterPosition());
         }
     }
 }
