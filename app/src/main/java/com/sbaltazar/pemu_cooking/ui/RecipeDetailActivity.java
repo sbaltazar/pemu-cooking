@@ -3,6 +3,7 @@ package com.sbaltazar.pemu_cooking.ui;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -38,6 +39,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
             bar.setTitle(recipe.getName());
         }
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        RecipeDetailFragment fragment = RecipeDetailFragment.newInstance(recipe);
+        fragmentManager.beginTransaction().add(R.id.fl_recipe_detail_container, fragment).commit();
 
     }
 }
