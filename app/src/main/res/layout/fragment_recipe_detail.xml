@@ -1,65 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- TODO: Agregar contentDescription -->
-        <ImageView
-            android:id="@+id/iv_recipe_image"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"><!-- Disables the RecyclerView auto-focus -->
 
-        <TextView
-            android:id="@+id/tv_recipe_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_recipe_image"
-            tools:text="Recipe name" />
+            <!-- TODO: Agregar contentDescription -->
+            <ImageView
+                android:id="@+id/iv_recipe_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_recipe_servings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_recipe_name"
-            tools:text="8 servings" />
+            <TextView
+                android:id="@+id/tv_recipe_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_recipe_image"
+                tools:text="Recipe name" />
 
-        <TextView
-            android:id="@+id/tv_ingredient_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_recipe_servings"
-            tools:text="Ingredient list" />
+            <TextView
+                android:id="@+id/tv_recipe_servings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_name"
+                tools:text="8 servings" />
 
-        <TextView
-            android:id="@+id/tv_recipe_ingredients"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_ingredient_list"
-            tools:text=" • Ingredient 1 \n • Ingredient 2 \n • Ingredient 3 \n " />
+            <TextView
+                android:id="@+id/tv_ingredient_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_servings"
+                tools:text="Ingredient list" />
 
-        <TextView
-            android:id="@+id/tv_cooking_steps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_recipe_ingredients"
-            tools:text="Cooking steps" />
+            <TextView
+                android:id="@+id/tv_recipe_ingredients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_ingredient_list"
+                tools:text=" • Ingredient 1 \n • Ingredient 2 \n • Ingredient 3 \n " />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recipe_cooking_steps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_cooking_steps" />
+            <TextView
+                android:id="@+id/tv_cooking_steps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_ingredients"
+                tools:text="Cooking steps" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recipe_cooking_steps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_cooking_steps" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
 </layout>
