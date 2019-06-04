@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sbaltazar.pemu_cooking.R;
-import com.sbaltazar.pemu_cooking.data.models.CookingStep;
 import com.sbaltazar.pemu_cooking.data.models.Ingredient;
 import com.sbaltazar.pemu_cooking.data.models.Recipe;
 import com.sbaltazar.pemu_cooking.databinding.FragmentRecipeDetailBinding;
@@ -25,7 +24,7 @@ import java.util.Locale;
 
 public class RecipeDetailFragment extends Fragment implements CookingStepAdapter.OnCookingStepClickListener {
 
-    public static final String EXTRA_COOKING_STEP = "extra_cooking_step";
+    public static final String EXTRA_COOKING_STEP_POSITION = "extra_cooking_step_position";
     public static final String EXTRA_COOKING_STEP_LIST = "extra_cooking_step_list";
 
     private CookingStepAdapter mCookingStepAdapter;
@@ -91,10 +90,8 @@ public class RecipeDetailFragment extends Fragment implements CookingStepAdapter
     public void onCookingStepClick(View view, int position) {
 
         // TODO: When in small device start new activity
-        CookingStep cookingStep = mCookingStepAdapter.getCookingStep(position);
-
         Intent intent = new Intent(getContext(), CookingStepActivity.class);
-        intent.putExtra(EXTRA_COOKING_STEP, cookingStep);
+        intent.putExtra(EXTRA_COOKING_STEP_POSITION, position);
         intent.putParcelableArrayListExtra(EXTRA_COOKING_STEP_LIST,
                 new ArrayList<Parcelable>(mCookingStepAdapter.getAllCookingSteps()));
 

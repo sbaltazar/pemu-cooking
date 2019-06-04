@@ -38,10 +38,11 @@ public class CookingStepFragment extends Fragment {
     public CookingStepFragment() {
     }
 
-    static CookingStepFragment newInstance(@NonNull CookingStep cookingStep) {
+    static CookingStepFragment newInstance(@NonNull CookingStep cookingStep, int cookingStepListSize) {
         CookingStepFragment fragment = new CookingStepFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(RecipeDetailFragment.EXTRA_COOKING_STEP, cookingStep);
+        bundle.putParcelable(CookingStepActivity.EXTRA_COOKING_STEP, cookingStep);
+        bundle.putInt(CookingStepActivity.EXTRA_COOKING_STEP_LIST_SIZE, cookingStepListSize);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -54,9 +55,17 @@ public class CookingStepFragment extends Fragment {
 
         if (getArguments() == null) return null;
 
-        mCookingStep = getArguments().getParcelable(RecipeDetailFragment.EXTRA_COOKING_STEP);
+        mCookingStep = getArguments().getParcelable(CookingStepActivity.EXTRA_COOKING_STEP);
+
+        int cookingStepListSize = getArguments()
+                .getInt(CookingStepActivity.EXTRA_COOKING_STEP_LIST_SIZE);
 
         if (mCookingStep == null) return null;
+
+        if (mCookingStep.getId() == 0) mBinding.btnPrevStep.setVisibility(View.INVISIBLE);
+
+        if (mCookingStep.getId() == cookingStepListSize)
+            mBinding.btnNextStep.setVisibility(View.INVISIBLE);
 
         mBinding.tvCompleteDescription.setText(mCookingStep.getCompleteDescription());
 
