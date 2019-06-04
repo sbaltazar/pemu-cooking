@@ -2,6 +2,7 @@ package com.sbaltazar.pemu_cooking.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,13 @@ import com.sbaltazar.pemu_cooking.data.models.Ingredient;
 import com.sbaltazar.pemu_cooking.data.models.Recipe;
 import com.sbaltazar.pemu_cooking.databinding.FragmentRecipeDetailBinding;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class RecipeDetailFragment extends Fragment implements CookingStepAdapter.OnCookingStepClickListener {
 
     public static final String EXTRA_COOKING_STEP = "extra_cooking_step";
+    public static final String EXTRA_COOKING_STEP_LIST = "extra_cooking_step_list";
 
     private CookingStepAdapter mCookingStepAdapter;
 
@@ -92,6 +95,8 @@ public class RecipeDetailFragment extends Fragment implements CookingStepAdapter
 
         Intent intent = new Intent(getContext(), CookingStepActivity.class);
         intent.putExtra(EXTRA_COOKING_STEP, cookingStep);
+        intent.putParcelableArrayListExtra(EXTRA_COOKING_STEP_LIST,
+                new ArrayList<Parcelable>(mCookingStepAdapter.getAllCookingSteps()));
 
         startActivity(intent);
 

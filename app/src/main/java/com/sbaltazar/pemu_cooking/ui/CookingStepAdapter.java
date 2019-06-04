@@ -61,6 +61,10 @@ public class CookingStepAdapter extends RecyclerView.Adapter<CookingStepAdapter.
         return null;
     }
 
+    List<CookingStep> getAllCookingSteps() {
+        return mCookingSteps;
+    }
+
     class CookingStepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ItemCookingStepBinding mCookingStepBinding;

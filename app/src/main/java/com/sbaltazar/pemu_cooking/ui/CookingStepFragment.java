@@ -13,22 +13,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
-import com.google.android.exoplayer2.extractor.Extractor;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelector;
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.sbaltazar.pemu_cooking.R;
@@ -37,7 +27,7 @@ import com.sbaltazar.pemu_cooking.databinding.FragmentCookingStepBinding;
 
 public class CookingStepFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentActionListener mListener;
     private CookingStep mCookingStep;
     private Context mContext;
 
@@ -68,11 +58,28 @@ public class CookingStepFragment extends Fragment {
 
         if (mCookingStep == null) return null;
 
-        Toast.makeText(getContext(), mCookingStep.getCompleteDescription(), Toast.LENGTH_SHORT).show();
+        mBinding.tvCompleteDescription.setText(mCookingStep.getCompleteDescription());
+
+        mBinding.btnPrevStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onPrevButtonClick(v, mCookingStep);
+            }
+        });
+
+        mBinding.btnNextStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onNextButtonClick(v, mCookingStep);
+            }
+        });
+
 
         if (!TextUtils.isEmpty(mCookingStep.getVideoUrl())) {
             Uri videoUri = Uri.parse(mCookingStep.getVideoUrl());
             initPlayer(videoUri, mContext);
+        } else {
+            mBinding.pvPlayer.setVisibility(View.GONE);
         }
 
         return mBinding.getRoot();
@@ -88,11 +95,11 @@ public class CookingStepFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentActionListener) {
+            mListener = (OnFragmentActionListener) context;
         } else {
-            //throw new RuntimeException(context.toString()
-            //      + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentActionListener");
         }
 
         mContext = context;
@@ -116,9 +123,10 @@ public class CookingStepFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnFragmentActionListener {
+        void onPrevButtonClick(View view, CookingStep step);
+
+        void onNextButtonClick(View view, CookingStep step);
     }
 
     private void initPlayer(Uri videoUri, @NonNull Context context) {
@@ -127,7 +135,7 @@ public class CookingStepFragment extends Fragment {
             //TrackSelector trackSelector = new DefaultTrackSelector();
             //LoadControl loadControl = new DefaultLoadControl();
             mExoplayer = ExoPlayerFactory.newSimpleInstance(context); //, trackSelector, loadControl);
-            mBinding.pvStepCookingVideo.setPlayer(mExoplayer);
+            mBinding.pvPlayer.setPlayer(mExoplayer);
 
             DataSource.Factory dataSourceFactory = new DefaultHttpDataSourceFactory(
                     Util.getUserAgent(context, "pemu-cooking"));
@@ -135,6 +143,7 @@ public class CookingStepFragment extends Fragment {
             MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(videoUri);
 
             mExoplayer.prepare(videoSource);
+            mBinding.pvPlayer.setVisibility(View.VISIBLE);
             mExoplayer.setPlayWhenReady(true);
         }
     }
