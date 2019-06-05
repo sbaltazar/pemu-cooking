@@ -1,6 +1,7 @@
 package com.sbaltazar.pemu_cooking.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sbaltazar.pemu_cooking.R;
 import com.sbaltazar.pemu_cooking.data.models.CookingStep;
 import com.sbaltazar.pemu_cooking.databinding.ItemCookingStepBinding;
 
@@ -76,6 +78,7 @@ public class CookingStepAdapter extends RecyclerView.Adapter<CookingStepAdapter.
         }
 
         void bind(CookingStep cookingStep) {
+            mCookingStepBinding.tvCookingStepIndex.setText(String.format("%s", cookingStep.getId()));
             mCookingStepBinding.tvCookingStepName.setText(cookingStep.getShortDescription());
         }
 

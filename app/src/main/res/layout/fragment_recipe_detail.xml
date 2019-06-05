@@ -12,11 +12,11 @@
             android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"><!-- Disables the RecyclerView auto-focus -->
 
-            <!-- TODO: Agregar contentDescription -->
             <ImageView
                 android:id="@+id/iv_recipe_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/a11y_image_recipe"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,6 +24,12 @@
                 android:id="@+id/tv_recipe_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorTextHighEmphasis"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_recipe_image"
                 tools:text="Recipe name" />
@@ -32,22 +38,31 @@
                 android:id="@+id/tv_recipe_servings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_recipe_name"
-                tools:text="8 servings" />
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/colorTextMediumEmphasis"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_recipe_name"
+                app:layout_constraintStart_toEndOf="@id/tv_recipe_name"
+                tools:text="(8 servings)" />
 
             <TextView
                 android:id="@+id/tv_ingredient_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/ingredient_list"
+                android:textColor="@color/colorTextMediumEmphasis"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_recipe_servings"
-                tools:text="Ingredient list" />
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_servings" />
 
             <TextView
                 android:id="@+id/tv_recipe_ingredients"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_ingredient_list"
                 tools:text=" • Ingredient 1 \n • Ingredient 2 \n • Ingredient 3 \n " />
@@ -56,9 +71,12 @@
                 android:id="@+id/tv_cooking_steps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/cooking_steps"
+                android:textColor="@color/colorTextMediumEmphasis"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_recipe_ingredients"
-                tools:text="Cooking steps" />
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_ingredients" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recipe_cooking_steps"

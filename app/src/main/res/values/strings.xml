@@ -6,9 +6,20 @@
     <string name="loading">Loading&#8230;</string>
     <!-- ///////////// -->
 
+    <!-- Fragment Recipe Detail -->
+    <string name="ingredient_list">Ingredients</string>
+    <string name="cooking_steps">Cooking steps</string>
+
+    <!-- ////////////////////// -->
+
     <!-- Item Recipe -->
     <string name="a11y_image_recipe">Recipe image</string>
     <!-- /////////// -->
+
+    <!-- Item CookingStep -->
+    <string name="cooking_step_index">Step %d</string>
+    <string name="a11y_icon_next">Next icon</string>
+    <!-- ////////////////-->
 
 
     <!-- Fragment CookingStep -->

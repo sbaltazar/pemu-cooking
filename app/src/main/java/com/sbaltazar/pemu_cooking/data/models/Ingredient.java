@@ -73,20 +73,30 @@ public class Ingredient implements Parcelable {
         this.name = name;
     }
 
-    private enum MeasureType {
+    public enum MeasureType {
         @SerializedName("CUP")
-        CUP,
+        CUP("Cup"),
         @SerializedName("TBLSP")
-        TABLESPOON,
+        TABLESPOON("Tblsp."),
         @SerializedName("TSP")
-        TEASPOON,
+        TEASPOON("Tsp."),
         @SerializedName("K")
-        KILOGRAM,
+        KILOGRAM("Kg"),
         @SerializedName("G")
-        GRAM,
+        GRAM("grs"),
         @SerializedName("OZ")
-        OUNCE,
+        OUNCE("oz"),
         @SerializedName("UNIT")
-        UNIT
+        UNIT("");
+
+        private String measure;
+
+        MeasureType(String measure) {
+            this.measure = measure;
+        }
+
+        public String getMeasure() {
+            return measure;
+        }
     }
 }

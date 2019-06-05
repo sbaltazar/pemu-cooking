@@ -12,7 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sbaltazar.pemu_cooking.R;
 import com.sbaltazar.pemu_cooking.data.models.Ingredient;
@@ -59,26 +61,33 @@ public class RecipeDetailFragment extends Fragment implements CookingStepAdapter
         // Recipe name
         binding.tvRecipeName.setText(recipe.getName());
         // Recipe servings
-        String servingString = String.format(Locale.getDefault(), "%d servings", recipe.getServings());
+        String servingString = String.format(Locale.getDefault(), "(%d servings)", recipe.getServings());
         binding.tvRecipeServings.setText(servingString);
 
         StringBuilder ingredientString = new StringBuilder();
 
         for (Ingredient ingredient : recipe.getIngredients()) {
-            String ingredientItem = String.format("\t• %s %s %s\n",
-                    ingredient.getQuantity(), ingredient.getMeasureType(), ingredient.getName());
+            String ingredientItem = String.format(Locale.getDefault(), "\t\t• %.0f %s %s\n",
+                    ingredient.getQuantity(), ingredient.getMeasureType().getMeasure(), ingredient.getName());
             ingredientString.append(ingredientItem);
         }
 
         // Recipe ingredients list
-        binding.tvIngredientList.setText(ingredientString.toString());
+        binding.tvRecipeIngredients.setText(ingredientString.toString());
 
         mCookingStepAdapter = new CookingStepAdapter(getContext(), this);
         mCookingStepAdapter.setCookingSteps(recipe.getCookingSteps());
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+
+        DividerItemDecoration divider = new DividerItemDecoration(binding.rvRecipeCookingSteps.getContext(),
+                layoutManager.getOrientation());
+
         binding.rvRecipeCookingSteps.setHasFixedSize(true);
-        binding.rvRecipeCookingSteps.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvRecipeCookingSteps.setLayoutManager(layoutManager);
+        binding.rvRecipeCookingSteps.addItemDecoration(divider);
         binding.rvRecipeCookingSteps.setAdapter(mCookingStepAdapter);
+
 
         // Removes the scroll behavior from the RecyclerView to use the NestedScrollView instead
         ViewCompat.setNestedScrollingEnabled(binding.rvRecipeCookingSteps, false);
