@@ -5,7 +5,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="64dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp">
@@ -14,11 +14,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/iv_recipe_image"
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/a11y_image_recipe"
+                android:src="@drawable/img_recipe_not_available"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/tv_recipe_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorTextHighEmphasis"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/iv_recipe_image"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Recipe name" />
 
@@ -26,6 +40,8 @@
                 android:id="@+id/tv_recipe_servings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorTextMediumEmphasis"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_recipe_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_recipe_name"
                 tools:text="8 servings" />

@@ -31,8 +31,12 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle(R.string.title_recipe);
+        }
 
         mRecipeAdapter = new RecipeAdapter(this, this);
 
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnR
             public void onChanged(List<Recipe> recipes) {
                 if (recipes != null && !recipes.isEmpty()) {
                     mRecipeAdapter.setRecipes(recipes);
+                    setLoadingVisibility(false);
                 }
             }
         });
@@ -63,5 +68,10 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnR
         // Putting the recipe parcelable
         recipeDetailIntent.putExtra(EXTRA_RECIPE, recipe);
         startActivity(recipeDetailIntent);
+    }
+
+    private void setLoadingVisibility(boolean visibility){
+        mBinding.pbLoading.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
+        mBinding.tvLoading.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
     }
 }

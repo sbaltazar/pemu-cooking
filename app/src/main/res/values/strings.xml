@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">PemuCooking</string>
 
+    <!-- Activity Main -->
+    <string name="title_recipe">Recipes</string>
+    <string name="loading">Loading&#8230;</string>
+    <!-- ///////////// -->
+
+    <!-- Item Recipe -->
+    <string name="a11y_image_recipe">Recipe image</string>
+    <!-- /////////// -->
+
 
     <!-- Fragment CookingStep -->
     <string name="button_prev">Previous</string>
