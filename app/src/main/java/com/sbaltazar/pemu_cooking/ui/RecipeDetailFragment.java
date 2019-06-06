@@ -67,7 +67,7 @@ public class RecipeDetailFragment extends Fragment implements CookingStepAdapter
         StringBuilder ingredientString = new StringBuilder();
 
         for (Ingredient ingredient : recipe.getIngredients()) {
-            String ingredientItem = String.format(Locale.getDefault(), "\t\t• %.0f %s %s\n",
+            String ingredientItem = String.format(Locale.getDefault(), "• %.0f %s %s\n",
                     ingredient.getQuantity(), ingredient.getMeasureType().getMeasure(), ingredient.getName());
             ingredientString.append(ingredientItem);
         }

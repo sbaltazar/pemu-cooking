@@ -23,28 +23,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textStyle="bold"
                 android:textAllCaps="true"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:text="1" />
 
         </FrameLayout>
 
         <TextView
             android:id="@+id/tv_cooking_step_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:textColor="@color/colorTextMediumEmphasis"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/fr_cooking_step_circle"
+            app:layout_constraintEnd_toStartOf="@id/iv_next"
             app:layout_constraintStart_toEndOf="@id/fr_cooking_step_circle"
             app:layout_constraintTop_toTopOf="@id/fr_cooking_step_circle"
             tools:text="Cooking step" />
 
         <ImageView
+            android:id="@+id/iv_next"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="8dp"

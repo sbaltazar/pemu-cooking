@@ -67,6 +67,7 @@ public class CookingStepFragment extends Fragment {
         if (mCookingStep.getId() == cookingStepListSize)
             mBinding.btnNextStep.setVisibility(View.INVISIBLE);
 
+        mBinding.tvShortDescription.setText(mCookingStep.getShortDescription());
         mBinding.tvCompleteDescription.setText(mCookingStep.getCompleteDescription());
 
         mBinding.btnPrevStep.setOnClickListener(new View.OnClickListener() {
