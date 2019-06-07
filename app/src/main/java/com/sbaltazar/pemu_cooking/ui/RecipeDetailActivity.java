@@ -24,6 +24,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements CookingSt
 
     public static final String EXTRA_COOKING_STEP_POSITION = "extra_cooking_step_position";
     public static final String EXTRA_COOKING_STEP_LIST = "extra_cooking_step_list";
+    public static final String EXTRA_IS_TWO_PANE = "extra_cooking_is_two_pane";
+
 
     ActivityRecipeDetailBinding mBinding;
 
@@ -63,7 +65,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements CookingSt
 
         if (mIsTwoPane) {
             CookingStepFragment cookingStepFragment = CookingStepFragment
-                    .newInstance(mRecipe.getCookingSteps().get(0), mRecipe.getCookingSteps().size());
+                    .newInstance(mRecipe.getCookingSteps().get(0), mRecipe.getCookingSteps().size(), mIsTwoPane);
             fragmentManager
                     .beginTransaction()
                     .add(mBinding.flCookingStepContainer.getId(), cookingStepFragment)
@@ -85,7 +87,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements CookingSt
             startActivity(intent);
         } else {
             CookingStepFragment cookingStepFragment = CookingStepFragment
-                    .newInstance(mRecipe.getCookingSteps().get(position), mRecipe.getCookingSteps().size());
+                    .newInstance(mRecipe.getCookingSteps().get(position), mRecipe.getCookingSteps().size(), mIsTwoPane);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(mBinding.flCookingStepContainer.getId(), cookingStepFragment)
@@ -106,7 +108,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements CookingSt
         if (step.getId() > 0) {
             CookingStep prevStep = mRecipe.getCookingSteps().get(step.getId() - 1);
 
-            CookingStepFragment fragment = CookingStepFragment.newInstance(prevStep, mRecipe.getCookingSteps().size());
+            CookingStepFragment fragment = CookingStepFragment.newInstance(prevStep, mRecipe.getCookingSteps().size(), mIsTwoPane);
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -120,7 +122,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements CookingSt
         if (step.getId() >= 0) {
             CookingStep prevStep = mRecipe.getCookingSteps().get(step.getId() + 1);
 
-            CookingStepFragment fragment = CookingStepFragment.newInstance(prevStep, mRecipe.getCookingSteps().size());
+            CookingStepFragment fragment = CookingStepFragment.newInstance(prevStep, mRecipe.getCookingSteps().size(), mIsTwoPane);
 
             getSupportFragmentManager()
                     .beginTransaction()

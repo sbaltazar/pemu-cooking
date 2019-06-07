@@ -55,7 +55,7 @@ public class CookingStepActivity extends AppCompatActivity implements CookingSte
 
             int cookingStepListSize = mCookingStepList.size();
 
-            CookingStepFragment fragment = CookingStepFragment.newInstance(cookingStep, cookingStepListSize);
+            CookingStepFragment fragment = CookingStepFragment.newInstance(cookingStep, cookingStepListSize, false);
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -73,7 +73,7 @@ public class CookingStepActivity extends AppCompatActivity implements CookingSte
 
             mBar.setTitle(prevStep.getShortDescription());
 
-            CookingStepFragment fragment = CookingStepFragment.newInstance(prevStep, mCookingStepList.size());
+            CookingStepFragment fragment = CookingStepFragment.newInstance(prevStep, mCookingStepList.size(), false);
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -91,7 +91,7 @@ public class CookingStepActivity extends AppCompatActivity implements CookingSte
 
             mBar.setTitle(prevStep.getShortDescription());
 
-            CookingStepFragment fragment = CookingStepFragment.newInstance(prevStep, mCookingStepList.size());
+            CookingStepFragment fragment = CookingStepFragment.newInstance(prevStep, mCookingStepList.size(), false);
 
             getSupportFragmentManager()
                     .beginTransaction()

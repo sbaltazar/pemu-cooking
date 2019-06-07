@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
@@ -12,7 +13,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.sbaltazar.pemu_cooking.R;
 import com.sbaltazar.pemu_cooking.data.models.Recipe;
@@ -21,8 +21,6 @@ import com.sbaltazar.pemu_cooking.databinding.ActivityMainBinding;
 
 import java.util.List;
 
-import timber.log.Timber;
-
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnRecipeClickListener {
 
     public static final String EXTRA_RECIPE = "extra_recipe";
@@ -30,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnR
     private RecipeViewModel mRecipeViewModel;
     private RecipeAdapter mRecipeAdapter;
     ActivityMainBinding mBinding;
+
+    private boolean mIsTabletLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +41,20 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnR
             getSupportActionBar().setTitle(R.string.title_recipe);
         }
 
+        mIsTabletLayout = mBinding.vTabletView != null &&
+                mBinding.vTabletView.getVisibility() == View.VISIBLE;
+
         mRecipeAdapter = new RecipeAdapter(this, this);
 
         // RecyclerView setup
         mBinding.rvRecipes.setHasFixedSize(true);
-        mBinding.rvRecipes.setLayoutManager(new LinearLayoutManager(this));
+
+        if (mIsTabletLayout) {
+            mBinding.rvRecipes.setLayoutManager(new GridLayoutManager(this, 3));
+        } else {
+            mBinding.rvRecipes.setLayoutManager(new LinearLayoutManager(this));
+        }
+
         mBinding.rvRecipes.setAdapter(mRecipeAdapter);
 
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);

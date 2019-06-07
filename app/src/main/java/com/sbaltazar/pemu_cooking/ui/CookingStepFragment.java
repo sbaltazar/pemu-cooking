@@ -1,6 +1,7 @@
 package com.sbaltazar.pemu_cooking.ui;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -41,11 +42,12 @@ public class CookingStepFragment extends Fragment {
     public CookingStepFragment() {
     }
 
-    static CookingStepFragment newInstance(@NonNull CookingStep cookingStep, int cookingStepListSize) {
+    static CookingStepFragment newInstance(@NonNull CookingStep cookingStep, int cookingStepListSize, boolean isTwoPane) {
         CookingStepFragment fragment = new CookingStepFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(CookingStepActivity.EXTRA_COOKING_STEP, cookingStep);
         bundle.putInt(CookingStepActivity.EXTRA_COOKING_STEP_LIST_SIZE, cookingStepListSize);
+        bundle.putBoolean(RecipeDetailActivity.EXTRA_IS_TWO_PANE, isTwoPane);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -60,33 +62,37 @@ public class CookingStepFragment extends Fragment {
 
         mCookingStep = getArguments().getParcelable(CookingStepActivity.EXTRA_COOKING_STEP);
 
+        boolean isTwoPane = getArguments().getBoolean(RecipeDetailActivity.EXTRA_IS_TWO_PANE);
+
         int cookingStepListSize = getArguments()
                 .getInt(CookingStepActivity.EXTRA_COOKING_STEP_LIST_SIZE);
 
         if (mCookingStep == null) return null;
 
-        if (mCookingStep.getId() == 0) mBinding.btnPrevStep.setVisibility(View.INVISIBLE);
+        int orientation = getResources().getConfiguration().orientation;
+        if (isTwoPane || orientation == Configuration.ORIENTATION_PORTRAIT) {
+            if (mCookingStep.getId() == 0) mBinding.btnPrevStep.setVisibility(View.INVISIBLE);
 
-        if (mCookingStep.getId() >= cookingStepListSize - 1)
-            mBinding.btnNextStep.setVisibility(View.INVISIBLE);
+            if (mCookingStep.getId() >= cookingStepListSize - 1)
+                mBinding.btnNextStep.setVisibility(View.INVISIBLE);
 
-        mBinding.tvShortDescription.setText(mCookingStep.getShortDescription());
-        mBinding.tvCompleteDescription.setText(mCookingStep.getCompleteDescription());
+            mBinding.tvShortDescription.setText(mCookingStep.getShortDescription());
+            mBinding.tvCompleteDescription.setText(mCookingStep.getCompleteDescription());
 
-        mBinding.btnPrevStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onPrevButtonClick(v, mCookingStep);
-            }
-        });
+            mBinding.btnPrevStep.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onPrevButtonClick(v, mCookingStep);
+                }
+            });
 
-        mBinding.btnNextStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onNextButtonClick(v, mCookingStep);
-            }
-        });
-
+            mBinding.btnNextStep.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onNextButtonClick(v, mCookingStep);
+                }
+            });
+        }
 
         if (!TextUtils.isEmpty(mCookingStep.getVideoUrl())) {
             Uri videoUri = Uri.parse(mCookingStep.getVideoUrl());
