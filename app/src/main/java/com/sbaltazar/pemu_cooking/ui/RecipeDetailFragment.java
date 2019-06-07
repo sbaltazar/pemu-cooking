@@ -3,6 +3,7 @@ package com.sbaltazar.pemu_cooking.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.sbaltazar.pemu_cooking.R;
 import com.sbaltazar.pemu_cooking.data.models.Ingredient;
 import com.sbaltazar.pemu_cooking.data.models.Recipe;
 import com.sbaltazar.pemu_cooking.databinding.FragmentRecipeDetailBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -56,8 +57,11 @@ public class RecipeDetailFragment extends Fragment implements CookingStepAdapter
 
         if (recipe == null) return null;
 
-        // TODO: In case of image available, set image
-        //binding.ivRecipeImage = recipe.getImage();
+        // Recipe image
+        if (!TextUtils.isEmpty(recipe.getImageUrl())) {
+            Picasso.get().load(recipe.getImageUrl()).into(binding.ivRecipeImage);
+        }
+
         // Recipe name
         binding.tvRecipeName.setText(recipe.getName());
         // Recipe servings

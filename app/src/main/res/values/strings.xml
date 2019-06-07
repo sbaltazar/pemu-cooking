@@ -4,6 +4,8 @@
     <!-- Activity Main -->
     <string name="title_recipe">Recipes</string>
     <string name="loading">Loading&#8230;</string>
+    <string name="no_internet">No internet connection found. Check internet settings.</string>
+    <string name="button_retry_connection">Retry connection</string>
     <!-- ///////////// -->
 
     <!-- Fragment Recipe Detail -->
@@ -13,7 +15,7 @@
     <!-- ////////////////////// -->
 
     <!-- Item Recipe -->
-    <string name="a11y_image_recipe">Recipe image</string>
+    <string name="a11y_image_recipe">Recipe imageUrl</string>
     <!-- /////////// -->
 
     <!-- Item CookingStep -->

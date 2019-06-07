@@ -13,8 +13,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
@@ -64,7 +67,7 @@ public class CookingStepFragment extends Fragment {
 
         if (mCookingStep.getId() == 0) mBinding.btnPrevStep.setVisibility(View.INVISIBLE);
 
-        if (mCookingStep.getId() == cookingStepListSize)
+        if (mCookingStep.getId() >= cookingStepListSize - 1)
             mBinding.btnNextStep.setVisibility(View.INVISIBLE);
 
         mBinding.tvShortDescription.setText(mCookingStep.getShortDescription());
@@ -121,6 +124,7 @@ public class CookingStepFragment extends Fragment {
      */
     public interface OnFragmentActionListener {
         void onPrevButtonClick(View view, CookingStep step);
+
         void onNextButtonClick(View view, CookingStep step);
     }
 
@@ -137,7 +141,16 @@ public class CookingStepFragment extends Fragment {
 
             mExoplayer.prepare(videoSource);
             mBinding.pvPlayer.setVisibility(View.VISIBLE);
+
+            mExoplayer.addListener(new Player.EventListener() {
+                @Override
+                public void onPlayerError(ExoPlaybackException error) {
+                    Toast.makeText(CookingStepFragment.this.mContext, "Error when loading the video", Toast.LENGTH_SHORT).show();
+                }
+            });
             mExoplayer.setPlayWhenReady(true);
+
+
         }
     }
 

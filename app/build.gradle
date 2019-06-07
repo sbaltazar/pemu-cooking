@@ -41,12 +41,14 @@ dependencies {
 
     // ExoPlayer
     implementation 'com.google.android.exoplayer:exoplayer:2.10.1'
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 
     // Testing libraries
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Logging library
     implementation 'com.jakewharton.timber:timber:4.7.1'

@@ -6,7 +6,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnR
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.title_recipe);
         }
 
@@ -47,13 +50,43 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnR
 
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 
-        mRecipeViewModel.getRecipesFromApi().observe(this, new Observer<List<Recipe>>() {
+        if (!deviceHasInternetConnection()) {
+            showNoInternetHelp(true);
+            setLoadingVisibility(false);
+        } else {
+            setLoadingVisibility(true);
+            mRecipeViewModel.getRecipesFromApi().observe(this, new Observer<List<Recipe>>() {
+                @Override
+                public void onChanged(List<Recipe> recipes) {
+                    if (recipes != null && !recipes.isEmpty()) {
+                        mRecipeAdapter.setRecipes(recipes);
+                        setLoadingVisibility(false);
+                        showNoInternetHelp(false);
+                    }
+                }
+            });
+        }
+
+        mBinding.btnRetryConnection.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(List<Recipe> recipes) {
-                if (recipes != null && !recipes.isEmpty()) {
-                    mRecipeAdapter.setRecipes(recipes);
+            public void onClick(View v) {
+                if (deviceHasInternetConnection()) {
+                    setLoadingVisibility(true);
+                    showNoInternetHelp(false);
+                    mRecipeViewModel.getRecipesFromApi().observe(MainActivity.this, new Observer<List<Recipe>>() {
+                        @Override
+                        public void onChanged(List<Recipe> recipes) {
+                            if (recipes != null && !recipes.isEmpty()) {
+                                mRecipeAdapter.setRecipes(recipes);
+                                setLoadingVisibility(false);
+                            }
+                        }
+                    });
+                } else {
+                    showNoInternetHelp(true);
                     setLoadingVisibility(false);
                 }
+
             }
         });
     }
@@ -70,8 +103,26 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnR
         startActivity(recipeDetailIntent);
     }
 
-    private void setLoadingVisibility(boolean visibility){
+    private void setLoadingVisibility(boolean visibility) {
         mBinding.pbLoading.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
         mBinding.tvLoading.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    private boolean deviceHasInternetConnection() {
+
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (manager != null) {
+            NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+            return (activeNetwork != null && activeNetwork.isConnected());
+        }
+        return false;
+    }
+
+    private void showNoInternetHelp(boolean state) {
+
+        mBinding.tvNoInternet.setVisibility(state ? View.VISIBLE : View.INVISIBLE);
+        mBinding.btnRetryConnection.setVisibility(state ? View.VISIBLE : View.INVISIBLE);
+        mBinding.rvRecipes.setVisibility(state ? View.INVISIBLE : View.VISIBLE);
     }
 }

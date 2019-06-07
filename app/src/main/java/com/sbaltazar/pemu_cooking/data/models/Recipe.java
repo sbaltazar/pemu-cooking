@@ -19,7 +19,7 @@ public class Recipe implements Parcelable {
     private List<CookingStep> cookingSteps;
     private int servings;
     @Nullable
-    private String image;
+    private String imageUrl;
 
     private Recipe(Parcel in) {
         id = in.readInt();
@@ -29,7 +29,7 @@ public class Recipe implements Parcelable {
         cookingSteps = new ArrayList<>();
         in.readList(cookingSteps, Ingredient.class.getClassLoader());
         servings = in.readInt();
-        image = in.readString();
+        imageUrl = in.readString();
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -56,7 +56,7 @@ public class Recipe implements Parcelable {
         dest.writeList(ingredients);
         dest.writeList(cookingSteps);
         dest.writeInt(servings);
-        dest.writeString(image);
+        dest.writeString(imageUrl);
     }
 
     public int getId() {
@@ -100,11 +100,11 @@ public class Recipe implements Parcelable {
     }
 
     @Nullable
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(@Nullable String image) {
-        this.image = image;
+    public void setImageUrl(@Nullable String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
