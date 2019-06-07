@@ -32,12 +32,12 @@ public class CookingStepActivity extends AppCompatActivity implements CookingSte
         mBar = getSupportActionBar();
 
         if (getIntent() != null
-                && getIntent().hasExtra(RecipeDetailFragment.EXTRA_COOKING_STEP_POSITION)
-                && getIntent().hasExtra(RecipeDetailFragment.EXTRA_COOKING_STEP_LIST)) {
+                && getIntent().hasExtra(RecipeDetailActivity.EXTRA_COOKING_STEP_POSITION)
+                && getIntent().hasExtra(RecipeDetailActivity.EXTRA_COOKING_STEP_LIST)) {
 
-            mCookingStepList = getIntent().getParcelableArrayListExtra(RecipeDetailFragment.EXTRA_COOKING_STEP_LIST);
+            mCookingStepList = getIntent().getParcelableArrayListExtra(RecipeDetailActivity.EXTRA_COOKING_STEP_LIST);
 
-            int cookingStepIndex = getIntent().getIntExtra(RecipeDetailFragment.EXTRA_COOKING_STEP_POSITION, -1);
+            int cookingStepIndex = getIntent().getIntExtra(RecipeDetailActivity.EXTRA_COOKING_STEP_POSITION, -1);
 
             if (cookingStepIndex == -1) {
                 Toast.makeText(this, "Invalid cooking step selected", Toast.LENGTH_LONG).show();

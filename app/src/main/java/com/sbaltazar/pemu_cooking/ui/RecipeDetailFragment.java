@@ -22,13 +22,11 @@ import com.sbaltazar.pemu_cooking.data.models.Recipe;
 import com.sbaltazar.pemu_cooking.databinding.FragmentRecipeDetailBinding;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
-public class RecipeDetailFragment extends Fragment implements CookingStepAdapter.OnCookingStepClickListener {
+public class RecipeDetailFragment extends Fragment {
 
-    public static final String EXTRA_COOKING_STEP_POSITION = "extra_cooking_step_position";
-    public static final String EXTRA_COOKING_STEP_LIST = "extra_cooking_step_list";
+    private CookingStepAdapter.OnCookingStepClickListener mListener;
 
     private CookingStepAdapter mCookingStepAdapter;
 
@@ -41,6 +39,10 @@ public class RecipeDetailFragment extends Fragment implements CookingStepAdapter
         bundle.putParcelable(MainActivity.EXTRA_RECIPE, recipe);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    void setOnCookingStepClickListener(CookingStepAdapter.OnCookingStepClickListener listener) {
+        mListener = listener;
     }
 
     @Nullable
@@ -79,7 +81,7 @@ public class RecipeDetailFragment extends Fragment implements CookingStepAdapter
         // Recipe ingredients list
         binding.tvRecipeIngredients.setText(ingredientString.toString());
 
-        mCookingStepAdapter = new CookingStepAdapter(getContext(), this);
+        mCookingStepAdapter = new CookingStepAdapter(getContext(), mListener);
         mCookingStepAdapter.setCookingSteps(recipe.getCookingSteps());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -99,17 +101,5 @@ public class RecipeDetailFragment extends Fragment implements CookingStepAdapter
         return binding.getRoot();
     }
 
-    @Override
-    public void onCookingStepClick(View view, int position) {
 
-        // TODO: When in small device start new activity
-        Intent intent = new Intent(getContext(), CookingStepActivity.class);
-        intent.putExtra(EXTRA_COOKING_STEP_POSITION, position);
-        intent.putParcelableArrayListExtra(EXTRA_COOKING_STEP_LIST,
-                new ArrayList<Parcelable>(mCookingStepAdapter.getAllCookingSteps()));
-
-        startActivity(intent);
-
-        // TODO: Otherwise load the fragment in the same host activity
-    }
 }
