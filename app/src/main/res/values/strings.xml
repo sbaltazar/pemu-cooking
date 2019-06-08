@@ -29,4 +29,12 @@
     <string name="button_next">Next</string>
     <!-- //////////////////// -->
 
+    <!-- Widget-->
+    <string name="widget_name">PemuCooking Widget</string>
+    <string name="appwidget_select_recipe">Select a recipe</string>
+    <string name="appwidget_recipe_title">Recipe</string>
+    <string name="add_widget">Add recipe widget</string>
+    <string name="appwidget_recipe_ingredients">No ingredients</string>
+    <!-- //////-->
+
 </resources>

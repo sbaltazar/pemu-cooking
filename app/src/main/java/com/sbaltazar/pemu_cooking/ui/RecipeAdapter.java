@@ -24,7 +24,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         void onRecipeClick(View view, int position);
     }
 
-    RecipeAdapter(Context context, OnRecipeClickListener recipeClickListener) {
+    public RecipeAdapter(Context context, OnRecipeClickListener recipeClickListener) {
         mInflater = LayoutInflater.from(context);
         mRecipeClickListener = recipeClickListener;
     }
@@ -51,12 +51,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return 0;
     }
 
-    void setRecipes(List<Recipe> recipes) {
+    public void setRecipes(List<Recipe> recipes) {
         mRecipes = recipes;
         notifyDataSetChanged();
     }
 
-    Recipe getRecipe(int position) {
+    public Recipe getRecipe(int position) {
         if (mRecipes != null) return mRecipes.get(position);
         return null;
     }

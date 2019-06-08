@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:id="@+id/appwidget_recipe_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextHighEmphasis"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        tools:text="Recipe title" />
+
+    <TextView
+        android:id="@+id/appwidget_recipe_ingredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:contentDescription="@string/appwidget_recipe_title"
+        android:textColor="@color/colorTextHighEmphasis"
+        android:textSize="16sp"
+        tools:text=" • Ingredient 1 \n • Ingredient 2 \n • Ingredient 3 \n " />
+
+</LinearLayout>
