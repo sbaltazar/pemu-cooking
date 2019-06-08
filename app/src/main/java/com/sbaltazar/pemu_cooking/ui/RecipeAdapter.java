@@ -61,7 +61,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return null;
     }
 
-    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ItemRecipeBinding mRecipeBinding;
 
